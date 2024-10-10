@@ -4,7 +4,7 @@ const express = require("express");
 
 // 環境変数の取得
 // ポート番号
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 3001;
 // Messaging APIを呼び出すためのトークン
 const TOKEN = process.env.LINE_ACCESS_TOKEN;
 
