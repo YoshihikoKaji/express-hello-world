@@ -19,7 +19,9 @@ app.use(express.urlencoded({ extended: true, }));
 app.get("/", (_, res) => {
   res.sendStatus(200);
 });
-
+app.post("/", (_, res) => {
+  res.sendStatus(200);
+});
 //ルーティングの設定-MessaginAPI
 app.post("/webhook", (req, _) => {
   if (req.body.events[0].type === "message") {
