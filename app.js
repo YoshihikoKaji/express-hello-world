@@ -25,7 +25,8 @@ app.post("/", (_, res) => {
 //ルーティングの設定-MessaginAPI
 app.post("/webhook", (req, _) => {
   if (req.body.events[0].type === "message") {
-    res.send("HTTP POST request sent to the webhook URL!");
+    // res.send("HTTP POST request sent to the webhook URL!");
+    res.sendStatus(200);
     const headers = {
       "Content-Type": "application/json",
       Authorization: "Bearer " + TOKEN,
