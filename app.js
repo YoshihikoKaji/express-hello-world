@@ -15,9 +15,9 @@ app.get("/", (req, res) => {
   res.sendStatus(200);
 });
 
-app.post("/webhook", function (req, res) {
-  res.send("HTTP POST request sent to the webhook URL!");
-});
+// app.post("/webhook", function (req, res) {
+//   res.send("HTTP POST request sent to the webhook URL!");
+// });
 
 app.listen(PORT, () => {
   console.log(`Example app listening at http://localhost:${PORT}`);
