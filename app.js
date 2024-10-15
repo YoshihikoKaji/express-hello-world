@@ -25,6 +25,8 @@ app.listen(PORT, () => {
 app.post("/webhook", function (req, res) {
   res.send("HTTP POST request sent to the webhook URL!");
   // ユーザーがボットにメッセージを送った場合、応答メッセージを送る
+  //追記テスト
+  console.log('testtest');
   if (req.body.events[0].type === "message") {
     // APIサーバーに送信する応答トークンとメッセージデータを文字列化する
     const dataString = JSON.stringify({
