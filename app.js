@@ -11,8 +11,13 @@ app.use(
   })
 );
 
-app.get("/", (req, res) => {
-  res.sendStatus(200);
+// app.get("/", (req, res) => {
+//   res.sendStatus(200);
+// });
+app.get("/push", (req, res) => {
+  res.send("HTTP POST request sent to the push URL!");
+  const messages = [{ type: "text", text: "push message!", }];
+  pushMessage(messages);
 });
 
 // app.post("/webhook", function (req, res) {
@@ -30,11 +35,7 @@ app.post("/webhook", function (req, res) {
         const userData = { userId: req.body.events[0].source.userId }
         fs.writeFileSync('./user_data.json', JSON.stringify(userData));
 }
-app.get("/push", (req, res) => {
-  res.send("HTTP POST request sent to the push URL!");
-  const messages = [{ type: "text", text: "push message!", }];
-  pushMessage(messages);
-});
+
   //プッシュメッセージテストここまで
 
   //応答メッセージテストここから
