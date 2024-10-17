@@ -24,9 +24,22 @@ app.listen(PORT, () => {
 });
 app.post("/webhook", function (req, res) {
   res.send("HTTP POST request sent to the webhook URL!");
+  //プッシュメッセージテストここから
+  switch (req.body.events[0].type) {
+    case "follow":
+        const userData = { userId: req.body.events[0].source.userId }
+        fs.writeFileSync('./user_data.json', JSON.stringify(userData));
+}
+app.get("/push", (req, res) => {
+  res.send("HTTP POST request sent to the push URL!");
+  const messages = [{ type: "text", text: "push message!", }];
+  pushMessage(messages);
+});
+  //プッシュメッセージテストここまで
+
+  //応答メッセージテストここから
   // ユーザーがボットにメッセージを送った場合、応答メッセージを送る
-  //追記テスト
-  console.log('testtest');
+  /*
   if (req.body.events[0].type === "message") {
     // APIサーバーに送信する応答トークンとメッセージデータを文字列化する
     const dataString = JSON.stringify({
@@ -82,4 +95,41 @@ app.post("/webhook", function (req, res) {
     request.write(dataString);
     request.end();
   }
+  */
+  //応答メッセージテストここまで
 });
+
+//プッシュメッセージの送信処理テストここから
+function pushMessage(messages) {
+  const HEADERS = {
+      "Content-Type": "application/json",
+      Authorization: "Bearer " + TOKEN,
+  };
+
+  const userData = JSON.parse(fs.readFileSync('./user_data.json', 'utf-8'));
+  const userId = userData.userId;
+  const dataString = JSON.stringify({
+      to: userId,
+      messages: messages,
+  });
+
+  const webhookOptions = {
+      hostname: "api.line.me",
+      path: "/v2/bot/message/push",
+      method: "POST",
+      headers: HEADERS,
+      body: dataString,
+  }
+  const request = https.request(webhookOptions, res => {
+      res.on("data", d => {
+          process.stdout.write(d);
+      });
+  });
+  request.on("error", err => {
+      console.error(err);
+  });
+
+  request.write(dataString);
+  request.end();
+}
+//プッシュメッセージの送信処理テストここまで
