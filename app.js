@@ -15,8 +15,9 @@ app.get("/", (req, res) => {
   res.sendStatus(200);
 });
 app.get("/push", (req, res) => {
-  const usr = userData;
-  res.send(`HTTP POST request sent to the push URL!`+ usr);
+  // const usr = userData;
+  // res.send(`HTTP POST request sent to the push URL!`+ usr);
+  res.send(`HTTP POST request sent to the push URL!`);
   const messages = [{ type: "text", text: "push message!", }];
   pushMessage(messages);
 });
