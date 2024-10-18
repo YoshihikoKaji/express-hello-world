@@ -16,7 +16,7 @@ app.get("/", (req, res) => {
   res.sendStatus(200);
 });
 app.get("/push", (req, res) => {
-  const userData = { userId: req.body.events[0].source.userId }
+  const userData = { userId: 'kazunikazini' }
         tempUserData = JSON.stringify(userData);
   res.send(`HTTP POST request sent to the push URL!`+ tempUserData);
   //res.send(`HTTP POST request sent to the push URL!`);
