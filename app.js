@@ -122,7 +122,7 @@ function pushMessage(messages, userData) {
       to: userId,
       messages: messages,
   });
-
+  console.log("test3");
   const webhookOptions = {
       hostname: "api.line.me",
       path: "/v2/bot/message/push",
@@ -130,16 +130,22 @@ function pushMessage(messages, userData) {
       headers: HEADERS,
       body: dataString,
   }
+  console.log("test4");
   const request = https.request(webhookOptions, res => {
+    console.log("test5");
       res.on("data", d => {
           process.stdout.write(d);
       });
+      console.log("test6");
   });
   request.on("error", err => {
+    console.log("test7");
       console.error(err);
   });
 
   request.write(dataString);
+  console.log("test8");
   request.end();
+  console.log("test9");
 }
 //プッシュメッセージの送信処理テストここまで
