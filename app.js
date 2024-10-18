@@ -21,7 +21,7 @@ app.get("/push", (req, res) => {
   res.send(`HTTP POST request sent to the push URL!`+ tempUserData);
   //res.send(`HTTP POST request sent to the push URL!`);
   const messages = [{ type: "text", text: "push message!", }];
-  pushMessage(messages);
+  pushMessage(messages, userData);
 });
 
 // app.post("/webhook", function (req, res) {
@@ -106,14 +106,15 @@ app.post("/webhook", function (req, res) {
 });
 
 //プッシュメッセージの送信処理テストここから
-function pushMessage(messages) {
+function pushMessage(messages, userData) {
   const HEADERS = {
       "Content-Type": "application/json",
       Authorization: "Bearer " + TOKEN,
   };
 
-  const userData = JSON.parse(fs.readFileSync('./user_data.json', 'utf-8'));
-  const userId = userData.userId;
+  // const userData = JSON.parse(fs.readFileSync('./user_data.json', 'utf-8'));
+  // const userId = userData.userId;
+  const usreId = userData.userId;
   const dataString = JSON.stringify({
       to: userId,
       messages: messages,
