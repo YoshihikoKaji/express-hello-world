@@ -3,6 +3,7 @@ const express = require("express");
 const app = express();
 const PORT = process.env.PORT || 3000;
 const TOKEN = process.env.LINE_ACCESS_TOKEN;
+const tempUserData = {};
 
 app.use(express.json());
 app.use(
@@ -16,8 +17,8 @@ app.get("/", (req, res) => {
 });
 app.get("/push", (req, res) => {
   // const usr = userData;
-  // res.send(`HTTP POST request sent to the push URL!`+ usr);
-  res.send(`HTTP POST request sent to the push URL!`);
+  res.send(`HTTP POST request sent to the push URL!`+ tempUserData);
+  //res.send(`HTTP POST request sent to the push URL!`);
   const messages = [{ type: "text", text: "push message!", }];
   pushMessage(messages);
 });
@@ -36,6 +37,7 @@ app.post("/webhook", function (req, res) {
     case "follow":
         const userData = { userId: req.body.events[0].source.userId }
         fs.writeFileSync('./user_data.json', JSON.stringify(userData));
+        tempUserData = userData;
 }
 
   //プッシュメッセージテストここまで
