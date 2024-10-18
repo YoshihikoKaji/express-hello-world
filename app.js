@@ -142,7 +142,7 @@ function pushMessage(messages, userData) {
     console.log("test7");
       console.error(err);
   });
-
+  console.log("test6.5");
   request.write(dataString);
   console.log("test8");
   request.end();
