@@ -19,6 +19,7 @@ app.get("/push", (req, res) => {
   const userData = { userId: 'kazunikazini' }
         tempUserData = JSON.stringify(userData);
   res.send(`HTTP POST request sent to the push URL!`+ tempUserData);
+  res.send(`test`);
   //res.send(`HTTP POST request sent to the push URL!`);
   const messages = [{ type: "text", text: "push message!", }];
   pushMessage(messages, userData);
