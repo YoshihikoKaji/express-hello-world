@@ -117,7 +117,7 @@ function pushMessage(messages, userData) {
   // const userData = JSON.parse(fs.readFileSync('./user_data.json', 'utf-8'));
   // const userId = userData.userId;
   console.log('userData',userData);
-  const usreId = userData.userId;
+  const userId = userData.userId;
   const dataString = JSON.stringify({
       to: userId,
       messages: messages,
