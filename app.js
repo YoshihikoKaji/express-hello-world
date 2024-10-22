@@ -17,8 +17,6 @@ app.get("/", (req, res) => {
 });
 app.get("/push", (req, res) => {
   console.log("test1");
-  const userData = { userId: 'kazunikazini' }
-        tempUserData = JSON.stringify(userData);
   res.send(`HTTP POST request sent to the push URL!`+ tempUserData);
   console.log("test2");
   //res.send(`HTTP POST request sent to the push URL!`);
@@ -39,6 +37,7 @@ app.post("/webhook", function (req, res) {
   switch (req.body.events[0].type) {
     case "follow":
       case "message":
+        console.log("webhook");
         const userData = { userId: req.body.events[0].source.userId }
         fs.writeFileSync('./user_data.json', JSON.stringify(userData));
         tempUserData = JSON.stringify(userData);
@@ -109,16 +108,17 @@ app.post("/webhook", function (req, res) {
 });
 
 //プッシュメッセージの送信処理テストここから
-function pushMessage(messages, userData) {
+// function pushMessage(messages, userData) {
+  function pushMessage(messages) {
   const HEADERS = {
       "Content-Type": "application/json",
       Authorization: "Bearer " + TOKEN,
   };
 
-  // const userData = JSON.parse(fs.readFileSync('./user_data.json', 'utf-8'));
-  // const userId = userData.userId;
-  console.log('userData',userData);
+  const userData = JSON.parse(fs.readFileSync('./user_data.json', 'utf-8'));
   const userId = userData.userId;
+  // console.log('userData',userData);
+  // const userId = userData.userId;
   const dataString = JSON.stringify({
       to: userId,
       messages: messages,
