@@ -22,7 +22,8 @@ app.get("/push", (req, res) => {
   console.log("test2");
   //res.send(`HTTP POST request sent to the push URL!`);
   const messages = [{ type: "text", text: "push message!", }];
-  pushMessage(messages, userData);
+  // pushMessage(messages, userData);
+  pushMessage(messages);
 });
 
 // app.post("/webhook", function (req, res) {
