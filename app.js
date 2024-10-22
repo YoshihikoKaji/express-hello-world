@@ -38,6 +38,7 @@ app.post("/webhook", function (req, res) {
   //プッシュメッセージテストここから
   switch (req.body.events[0].type) {
     case "follow":
+      case "message":
         const userData = { userId: req.body.events[0].source.userId }
         fs.writeFileSync('./user_data.json', JSON.stringify(userData));
         tempUserData = JSON.stringify(userData);
