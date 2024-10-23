@@ -42,7 +42,7 @@ app.post("/webhook", function (req, res) {
         console.log("webhook");
         const userData = { userId: req.body.events[0].source.userId }
         fs.writeFileSync('./user_data.json', JSON.stringify(userData));
-        tempUserData = JSON.stringify(req.body.events[0].source);
+        tempUserData = JSON.stringify(req.body.events[0]);
 // }
 
   //プッシュメッセージテストここまで
