@@ -43,7 +43,7 @@ app.post("/webhook", function (req, res) {
         console.log("webhook");
         // const userData = { userId: req.body.events[0].source.userId }
         // fs.writeFileSync('./user_data.json', JSON.stringify(userData));
-        const groupData = { userId: req.body.events[0].source.groupId }
+        const groupData = { groupId: req.body.events[0].source.groupId}
         fs.writeFileSync('./user_data.json', JSON.stringify(groupData));
         
         tempUserData = JSON.stringify(req.body.events[0]);
