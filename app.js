@@ -123,7 +123,7 @@ app.post("/webhook", function (req, res) {
 
   const userData = JSON.parse(fs.readFileSync('./user_data.json', 'utf-8'));
   const groupId = userData.groupId;
-  // console.log('userData',userData);
+  console.log('groupData',groupId);
   // const userId = userData.userId;
   const dataString = JSON.stringify({
       // to: userId,
