@@ -4,6 +4,7 @@ const app = express();
 const PORT = process.env.PORT || 3000;
 const TOKEN = process.env.LINE_ACCESS_TOKEN;
 const fs = require('fs');
+var request = require('request-promise');
 let tempUserData = '';
 
 app.use(express.json());
@@ -18,7 +19,21 @@ app.get("/", (req, res) => {
 });
 app.get("/push", (req, res) => {
   console.log("test1");
-  res.send(`HTTP POST request sent to the push URL!`+ tempUserData);
+  const userData = JSON.parse(fs.readFileSync('./user_data.json', 'utf-8'));
+  const groupId = userData.groupId;
+  var options = {
+    url: `https://api.line.me/v2/bot/group/${groupId}/summary`,
+    method: 'GET',
+    json: true
+}
+request(options)
+.then(function (body) {
+        res.send(`HTTP POST request sent to the push URL!`+ body);
+
+})
+.catch(function (err) {
+        console.log(err);
+});
   console.log("test2");
   //res.send(`HTTP POST request sent to the push URL!`);
   const messages = [{ type: "text", text: "push message!", }];
