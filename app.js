@@ -36,14 +36,14 @@ app.listen(PORT, () => {
 app.post("/webhook", function (req, res) {
   res.send("HTTP POST request sent to the webhook URL!");
   //プッシュメッセージテストここから
-  switch (req.body.events[0].type) {
-    case "follow":
-      case "message":
+  // switch (req.body.events[0].type) {
+  //   case "follow":
+  //     case "message":
         console.log("webhook");
         const userData = { userId: req.body.events[0].source.userId }
         fs.writeFileSync('./user_data.json', JSON.stringify(userData));
         tempUserData = JSON.stringify(req.body.events[0].source);
-}
+// }
 
   //プッシュメッセージテストここまで
 
