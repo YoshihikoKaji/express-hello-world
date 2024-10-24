@@ -6,7 +6,7 @@ const TOKEN = process.env.LINE_ACCESS_TOKEN;
 const fs = require('fs');
 var request = require('request-promise');
 let tempUserData = '';
-//
+
 app.use(express.json());
 app.use(
   express.urlencoded({
