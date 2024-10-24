@@ -33,6 +33,7 @@ request(options)
 })
 .catch(function (err) {
         console.log(err);
+        res.send(err);
 });
   console.log("test2");
   //res.send(`HTTP POST request sent to the push URL!`);
