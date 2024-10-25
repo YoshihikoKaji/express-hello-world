@@ -4,6 +4,7 @@ const app = express();
 const PORT = process.env.PORT || 3000;
 const TOKEN = process.env.LINE_ACCESS_TOKEN;
 const fs = require('fs');
+const request = require('request');
 let tempUserData = '';
 
 app.use(express.json());
@@ -19,7 +20,10 @@ app.get("/", (req, res) => {
 app.get("/push", (req, res) => {
   console.log("test1");
   res.send(`HTTP POST request sent to the push URL!`+ tempUserData);
-  console.log("test2");
+  const response = await fetch(`https://api.line.me/v2/bot/group/${tempUserData.source.groupId}/summary`);
+console.log(response.headers.get("content-type")); // application/json; charset=utf-8
+const jsonData = await response.json(); // なぜ非同期処理なのか？
+  console.log("test2",jsonData);
   //res.send(`HTTP POST request sent to the push URL!`);
   const messages = [{ type: "text", text: "push message!", }];
   // pushMessage(messages, userData);
