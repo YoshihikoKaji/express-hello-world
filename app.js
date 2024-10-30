@@ -20,10 +20,16 @@ app.get("/", (req, res) => {
 app.get("/push", (req, res) => {
   console.log("test1");
   res.send(`HTTP POST request sent to the push URL!`+ tempUserData);
-  const response = await fetch(`https://api.line.me/v2/bot/group/${tempUserData.source.groupId}/summary`);
-console.log(response.headers.get("content-type")); // application/json; charset=utf-8
-const jsonData = await response.json(); // なぜ非同期処理なのか？
-  console.log("test2",jsonData);
+  fetch(`https://api.line.me/v2/bot/group/${tempUserData.source.groupId}/summary`)
+  .then(responce => {jsonData = response.json(); return jsonData})
+  .then(responce2 => { 
+    if(responce2){console.log("test2",responce2);
+      return true;
+  }else{
+    console.log("test-false",responce2);
+    return false;
+  }})
+  .catch(err => console.log(err));
   //res.send(`HTTP POST request sent to the push URL!`);
   const messages = [{ type: "text", text: "push message!", }];
   // pushMessage(messages, userData);
