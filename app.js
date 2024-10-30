@@ -6,6 +6,7 @@ const TOKEN = process.env.LINE_ACCESS_TOKEN;
 const fs = require('fs');
 // const request = require('request');
 let tempUserData = '';
+let tempUserDataOrg = '';
 
 app.use(express.json());
 app.use(
@@ -20,7 +21,7 @@ app.get("/", (req, res) => {
 app.get("/push", (req, res) => {
   console.log("test1");
   res.send(`HTTP POST request sent to the push URL!`+ tempUserData);
-  const groupId = tempUserData.source.groupId;
+  const groupId = tempUserDataOrg.source.groupId;
   fetch("https://api.line.me/v2/bot/group/"+ groupId +"/summary")
   .then(responce => {jsonData = response.json(); return jsonData})
   .then(responce2 => { 
@@ -56,7 +57,7 @@ app.post("/webhook", function (req, res) {
         // fs.writeFileSync('./user_data.json', JSON.stringify(userData));
         const groupData = { groupId: req.body.events[0].source.groupId}
         fs.writeFileSync('./user_data.json', JSON.stringify(groupData));
-        
+        tempUserDataOrg = req.body.events[0];
         tempUserData = JSON.stringify(req.body.events[0]);
 }
 
