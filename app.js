@@ -4,7 +4,7 @@ const app = express();
 const PORT = process.env.PORT || 3000;
 const TOKEN = process.env.LINE_ACCESS_TOKEN;
 const fs = require('fs');
-const request = require('request');
+// const request = require('request');
 let tempUserData = '';
 
 app.use(express.json());
