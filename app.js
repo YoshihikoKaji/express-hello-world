@@ -54,12 +54,12 @@ app.post("/webhook", function (req, res) {
   //     case "message":
       case "join":
         console.log("webhook");
-        const userData = { userId: req.body.events[0].source.userId }
+        const userData = req.body.events[0].source.userId;
         // fs.writeFileSync('./user_data.json', JSON.stringify(userData));
         const groupData = { groupId: req.body.events[0].source.groupId}
         fs.writeFileSync('./user_data.json', JSON.stringify(groupData));
         tempUserDataOrg = req.body.events[0];
-        tempUserData = JSON.stringify(userData);
+        tempUserData = userData;
          tempGroupData = JSON.stringify(req.body.events[0]);
 }
 });
