@@ -21,7 +21,7 @@ app.get("/", (req, res) => {
 });
 app.get("/push", (req, res) => {
   console.log("test1");
-  res.send(`HTTP POST request sent to the push URL!`+ tempUserData + tempUserData);
+  res.send(`HTTP POST request sent to the push URL!`+ tempUserData + tempGroupData);
   const groupId = tempUserDataOrg.source.groupId;
   fetch("https://api.line.me/v2/bot/group/"+ groupId +"/summary")
   .then(responce => {jsonData = response.json(); return jsonData})
@@ -59,7 +59,7 @@ app.post("/webhook", function (req, res) {
         const groupData = { groupId: req.body.events[0].source.groupId}
         fs.writeFileSync('./user_data.json', JSON.stringify(groupData));
         tempUserDataOrg = req.body.events[0];
-        tempUserData = userData
+        tempUserData = JSON.stringify(userData);
          tempGroupData = JSON.stringify(req.body.events[0]);
 }
 });
