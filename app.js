@@ -62,6 +62,7 @@ app.post("/webhook", function (req, res) {
         tempUserData = userData
          tempGroupData = JSON.stringify(req.body.events[0]);
 }
+});
 
   function pushMessage(messages) {
   const HEADERS = {
