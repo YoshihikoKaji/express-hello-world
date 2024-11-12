@@ -23,7 +23,11 @@ app.get("/push", (req, res) => {
   console.log("test1");
   res.send(`HTTP POST request sent to the push URL!`+ tempUserData + tempGroupData);
   const groupId = tempUserDataOrg.source.groupId;
-  fetch("https://api.line.me/v2/bot/group/"+ groupId +"/summary")
+  const HEADERS = {
+    "Content-Type": "application/json",
+    Authorization: "Bearer " + TOKEN,
+};
+  fetch("https://api.line.me/v2/bot/group/"+ groupId +"/summary",{headers: HEADERS})
   .then(responce => {jsonData = responce.json(); return jsonData})
   .then(responce2 => { 
     if(responce2){console.log("test2",responce2);
