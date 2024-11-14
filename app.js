@@ -3,6 +3,7 @@ const express = require("express");
 const app = express();
 const PORT = process.env.PORT || 3000;
 const TOKEN = process.env.LINE_ACCESS_TOKEN;
+const nodemailer = require('nodemailer');
 const fs = require('fs');
 // const request = require('request');
 let tempUserData = '';
@@ -33,7 +34,7 @@ app.get("/push", (req, res) => {
     if(responce2){console.log("test2",responce2);
       return true;
   }else{
-    console.log("test-false",responce2);
+    console.log("test-false",responce2.groupId,responce2.groupName);
     return false;
   }})
   .catch(err => console.log(err));
