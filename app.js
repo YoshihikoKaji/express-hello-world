@@ -31,10 +31,10 @@ app.get("/push", (req, res) => {
   fetch("https://api.line.me/v2/bot/group/"+ groupId +"/summary",{headers: HEADERS})
   .then(responce => {jsonData = responce.json(); return jsonData})
   .then(responce2 => { 
-    if(responce2){console.log("test2",responce2);
+    if(responce2){console.log("test2",responce2.groupId,responce2.groupName);
       return true;
   }else{
-    console.log("test-false",responce2.groupId,responce2.groupName);
+    console.log("test-false",responce2);
     return false;
   }})
   .catch(err => console.log(err));
