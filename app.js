@@ -78,6 +78,9 @@ app.post("/webhook", function (req, res) {
         .then(responce2 => {
           if (responce2) {
             console.log("test2", responce2.groupId, responce2.groupName);
+            const messages = [{ type: "text", text: "push message!", }];
+  // pushMessage(messages, userData);
+  pushMessage(messages);
             return true;
           } else {
             console.log("test-false", responce2);
