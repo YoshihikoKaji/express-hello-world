@@ -59,6 +59,7 @@ app.post("/webhook", function (req, res) {
   switch (req.body.events[0].type) {
     //   case "follow":
     //     case "message":
+      console.log("type",req.body.events[0]);
     case "join":
       console.log("webhook");
       const userData = req.body.events[0].source.userId;
