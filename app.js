@@ -22,22 +22,24 @@ app.get("/", (req, res) => {
 });
 app.get("/push", (req, res) => {
   console.log("test1");
-  res.send(`HTTP POST request sent to the push URL!`+ tempUserData + tempGroupData);
+  res.send(`HTTP POST request sent to the push URL!` + tempUserData + tempGroupData);
   const groupId = tempUserDataOrg.source.groupId;
   const HEADERS = {
     "Content-Type": "application/json",
     Authorization: "Bearer " + TOKEN,
-};
-  fetch("https://api.line.me/v2/bot/group/"+ groupId +"/summary",{headers: HEADERS})
-  .then(responce => {jsonData = responce.json(); return jsonData})
-  .then(responce2 => { 
-    if(responce2){console.log("test2",responce2.groupId,responce2.groupName);
-      return true;
-  }else{
-    console.log("test-false",responce2);
-    return false;
-  }})
-  .catch(err => console.log(err));
+  };
+  fetch("https://api.line.me/v2/bot/group/" + groupId + "/summary", { headers: HEADERS })
+    .then(responce => { jsonData = responce.json(); return jsonData })
+    .then(responce2 => {
+      if (responce2) {
+        console.log("test2", responce2.groupId, responce2.groupName);
+        return true;
+      } else {
+        console.log("test-false", responce2);
+        return false;
+      }
+    })
+    .catch(err => console.log(err));
   //res.send(`HTTP POST request sent to the push URL!`);
   const messages = [{ type: "text", text: "push message!", }];
   // pushMessage(messages, userData);
@@ -55,54 +57,71 @@ app.post("/webhook", function (req, res) {
   res.send("HTTP POST request sent to the webhook URL!");
   //プッシュメッセージテストここから
   switch (req.body.events[0].type) {
-  //   case "follow":
-  //     case "message":
-      case "join":
-        console.log("webhook");
-        const userData = req.body.events[0].source.userId;
-        // fs.writeFileSync('./user_data.json', JSON.stringify(userData));
-        const groupData = { groupId: req.body.events[0].source.groupId}
-        fs.writeFileSync('./user_data.json', JSON.stringify(groupData));
-        tempUserDataOrg = req.body.events[0];
-        tempUserData = userData;
-         tempGroupData = JSON.stringify(req.body.events[0]);
-}
+    //   case "follow":
+    //     case "message":
+    case "join":
+      console.log("webhook");
+      const userData = req.body.events[0].source.userId;
+      // fs.writeFileSync('./user_data.json', JSON.stringify(userData));
+      const groupData = { groupId: req.body.events[0].source.groupId }
+      fs.writeFileSync('./user_data.json', JSON.stringify(groupData));
+      tempUserDataOrg = req.body.events[0];
+      tempUserData = userData;
+      tempGroupData = JSON.stringify(req.body.events[0]);
+      const groupId = tempUserDataOrg.source.groupId;
+      const HEADERS = {
+        "Content-Type": "application/json",
+        Authorization: "Bearer " + TOKEN,
+      };
+      fetch("https://api.line.me/v2/bot/group/" + groupId + "/summary", { headers: HEADERS })
+        .then(responce => { jsonData = responce.json(); return jsonData })
+        .then(responce2 => {
+          if (responce2) {
+            console.log("test2", responce2.groupId, responce2.groupName);
+            return true;
+          } else {
+            console.log("test-false", responce2);
+            return false;
+          }
+        })
+        .catch(err => console.log(err));
+  }
 });
 
-  function pushMessage(messages) {
+function pushMessage(messages) {
   const HEADERS = {
-      "Content-Type": "application/json",
-      Authorization: "Bearer " + TOKEN,
+    "Content-Type": "application/json",
+    Authorization: "Bearer " + TOKEN,
   };
 
   const userData = JSON.parse(fs.readFileSync('./user_data.json', 'utf-8'));
   const groupId = userData.groupId;
-  console.log('groupData',groupId);
+  console.log('groupData', groupId);
   // const userId = userData.userId;
   const dataString = JSON.stringify({
-      // to: userId,
-      to: groupId,
-      messages: messages,
+    // to: userId,
+    to: groupId,
+    messages: messages,
   });
   console.log("test3");
   const webhookOptions = {
-      hostname: "api.line.me",
-      path: "/v2/bot/message/push",
-      method: "POST",
-      headers: HEADERS,
-      body: dataString,
+    hostname: "api.line.me",
+    path: "/v2/bot/message/push",
+    method: "POST",
+    headers: HEADERS,
+    body: dataString,
   }
   console.log("test4");
   const request = https.request(webhookOptions, res => {
     console.log("test5");
-      res.on("data", d => {
-          process.stdout.write(d);
-      });
-      console.log("test6");
+    res.on("data", d => {
+      process.stdout.write(d);
+    });
+    console.log("test6");
   });
   request.on("error", err => {
     console.log("test7");
-      console.error(err);
+    console.error(err);
   });
   console.log("test6.5");
   request.write(dataString);
