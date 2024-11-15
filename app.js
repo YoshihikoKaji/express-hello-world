@@ -56,7 +56,7 @@ app.listen(PORT, () => {
 app.post("/webhook", function (req, res) {
   res.send("HTTP POST request sent to the webhook URL!");
   //プッシュメッセージテストここから
-      console.log("type",req.body.events[0]);
+  console.log("type", req.body.events[0]);
   switch (req.body.events[0].type) {
     //   case "follow":
     //     case "message":
@@ -70,26 +70,28 @@ app.post("/webhook", function (req, res) {
       tempUserData = userData;
       tempGroupData = JSON.stringify(req.body.events[0]);
       const groupId = tempUserDataOrg.source.groupId;
-      const HEADERS = {
-        "Content-Type": "application/json",
-        Authorization: "Bearer " + TOKEN,
-      };
-      fetch("https://api.line.me/v2/bot/group/" + groupId + "/summary", { headers: HEADERS })
-        .then(responce => { jsonData = responce.json(); return jsonData })
-        .then(responce2 => {
-          if (responce2) {
-            console.log("test2", responce2.groupId, responce2.groupName);
-            const messages = [{ type: "text", text: "push message!", }];
-  // pushMessage(messages, userData);
-  pushMessage(messages);
-            return true;
-          } else {
-            console.log("test-false", responce2);
-            return false;
-          }
-        })
-        .catch(err => console.log(err));
-  }
+      if (groupId === GROUP_ID) {
+        const HEADERS = {
+          "Content-Type": "application/json",
+          Authorization: "Bearer " + TOKEN,
+        };
+        fetch("https://api.line.me/v2/bot/group/" + groupId + "/summary", { headers: HEADERS })
+          .then(responce => { jsonData = responce.json(); return jsonData })
+          .then(responce2 => {
+            if (responce2) {
+              console.log("test2", responce2.groupId, responce2.groupName);
+              const messages = [{ type: "text", text: "push message!", }];
+              // pushMessage(messages, userData);
+              pushMessage(messages);
+              return true;
+            } else {
+              console.log("test-false", responce2);
+              return false;
+            }
+          })
+          .catch(err => console.log(err));
+      }
+  };
 });
 
 function pushMessage(messages) {
