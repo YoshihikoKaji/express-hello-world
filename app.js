@@ -56,10 +56,10 @@ app.listen(PORT, () => {
 app.post("/webhook", function (req, res) {
   res.send("HTTP POST request sent to the webhook URL!");
   //プッシュメッセージテストここから
+      console.log("type",req.body.events[0]);
   switch (req.body.events[0].type) {
     //   case "follow":
     //     case "message":
-      console.log("type",req.body.events[0]);
     case "join":
       console.log("webhook");
       const userData = req.body.events[0].source.userId;
