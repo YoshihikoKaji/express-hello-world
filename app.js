@@ -3,7 +3,6 @@ const express = require("express");
 const app = express();
 const PORT = process.env.PORT || 3000;
 const TOKEN = process.env.LINE_ACCESS_TOKEN;
-const GROUP_ID = process.env.GROUP_ID;
 // const nodemailer = require('nodemailer');
 const fs = require('fs');
 // const request = require('request');
@@ -56,6 +55,12 @@ app.listen(PORT, () => {
 });
 app.post("/webhook", function (req, res) {
   res.send("HTTP POST request sent to the webhook URL!");
+  //検証
+  console.log("res", res);
+  console.log("req", req);
+  console.log("req.body", req.body);
+  //検証ここまで
+  /*
   //プッシュメッセージテストここから
   console.log("type", req.body.events[0]);
   switch (req.body.events[0].type) {
@@ -71,7 +76,6 @@ app.post("/webhook", function (req, res) {
       tempUserData = userData;
       tempGroupData = JSON.stringify(req.body.events[0]);
       const groupId = tempUserDataOrg.source.groupId;
-      if (groupId === GROUP_ID) {
         const HEADERS = {
           "Content-Type": "application/json",
           Authorization: "Bearer " + TOKEN,
@@ -91,8 +95,9 @@ app.post("/webhook", function (req, res) {
             }
           })
           .catch(err => console.log(err));
-      }
+      
   };
+  */
 });
 
 function pushMessage(messages) {
