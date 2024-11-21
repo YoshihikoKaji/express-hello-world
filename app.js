@@ -20,31 +20,31 @@ app.use(
 app.get("/", (req, res) => {
   res.sendStatus(200);
 });
-app.get("/push", (req, res) => {
-  console.log("test1");
-  res.send(`HTTP POST request sent to the push URL!` + tempUserData + tempGroupData);
-  const groupId = tempUserDataOrg.source.groupId;
-  const HEADERS = {
-    "Content-Type": "application/json",
-    Authorization: "Bearer " + TOKEN,
-  };
-  fetch("https://api.line.me/v2/bot/group/" + groupId + "/summary", { headers: HEADERS })
-    .then(responce => { jsonData = responce.json(); return jsonData })
-    .then(responce2 => {
-      if (responce2) {
-        console.log("test2", responce2.groupId, responce2.groupName);
-        return true;
-      } else {
-        console.log("test-false", responce2);
-        return false;
-      }
-    })
-    .catch(err => console.log(err));
-  //res.send(`HTTP POST request sent to the push URL!`);
-  const messages = [{ type: "text", text: "push message!", }];
-  // pushMessage(messages, userData);
-  pushMessage(messages);
-});
+// app.get("/push", (req, res) => {
+//   console.log("test1");
+//   res.send(`HTTP POST request sent to the push URL!` + tempUserData + tempGroupData);
+//   const groupId = tempUserDataOrg.source.groupId;
+//   const HEADERS = {
+//     "Content-Type": "application/json",
+//     Authorization: "Bearer " + TOKEN,
+//   };
+//   fetch("https://api.line.me/v2/bot/group/" + groupId + "/summary", { headers: HEADERS })
+//     .then(responce => { jsonData = responce.json(); return jsonData })
+//     .then(responce2 => {
+//       if (responce2) {
+//         console.log("test2", responce2.groupId, responce2.groupName);
+//         return true;
+//       } else {
+//         console.log("test-false", responce2);
+//         return false;
+//       }
+//     })
+//     .catch(err => console.log(err));
+//   //res.send(`HTTP POST request sent to the push URL!`);
+//   const messages = [{ type: "text", text: "push message!", }];
+//   // pushMessage(messages, userData);
+//   pushMessage(messages);
+// });
 
 // app.post("/webhook", function (req, res) {
 //   res.send("HTTP POST request sent to the webhook URL!");
@@ -100,44 +100,44 @@ app.post("/webhook", function (req, res) {
   */
 });
 
-function pushMessage(messages) {
-  const HEADERS = {
-    "Content-Type": "application/json",
-    Authorization: "Bearer " + TOKEN,
-  };
+// function pushMessage(messages) {
+//   const HEADERS = {
+//     "Content-Type": "application/json",
+//     Authorization: "Bearer " + TOKEN,
+//   };
 
-  const userData = JSON.parse(fs.readFileSync('./user_data.json', 'utf-8'));
-  const groupId = userData.groupId;
-  console.log('groupData', groupId);
-  // const userId = userData.userId;
-  const dataString = JSON.stringify({
-    // to: userId,
-    to: groupId,
-    messages: messages,
-  });
-  console.log("test3");
-  const webhookOptions = {
-    hostname: "api.line.me",
-    path: "/v2/bot/message/push",
-    method: "POST",
-    headers: HEADERS,
-    body: dataString,
-  }
-  console.log("test4");
-  const request = https.request(webhookOptions, res => {
-    console.log("test5");
-    res.on("data", d => {
-      process.stdout.write(d);
-    });
-    console.log("test6");
-  });
-  request.on("error", err => {
-    console.log("test7");
-    console.error(err);
-  });
-  console.log("test6.5");
-  request.write(dataString);
-  console.log("test8");
-  request.end();
-  console.log("test9");
-}
+//   const userData = JSON.parse(fs.readFileSync('./user_data.json', 'utf-8'));
+//   const groupId = userData.groupId;
+//   console.log('groupData', groupId);
+//   // const userId = userData.userId;
+//   const dataString = JSON.stringify({
+//     // to: userId,
+//     to: groupId,
+//     messages: messages,
+//   });
+//   console.log("test3");
+//   const webhookOptions = {
+//     hostname: "api.line.me",
+//     path: "/v2/bot/message/push",
+//     method: "POST",
+//     headers: HEADERS,
+//     body: dataString,
+//   }
+//   console.log("test4");
+//   const request = https.request(webhookOptions, res => {
+//     console.log("test5");
+//     res.on("data", d => {
+//       process.stdout.write(d);
+//     });
+//     console.log("test6");
+//   });
+//   request.on("error", err => {
+//     console.log("test7");
+//     console.error(err);
+//   });
+//   console.log("test6.5");
+//   request.write(dataString);
+//   console.log("test8");
+//   request.end();
+//   console.log("test9");
+// }
